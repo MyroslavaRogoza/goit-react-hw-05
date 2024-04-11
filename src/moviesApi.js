@@ -17,9 +17,9 @@ export const getTrendingMovies = async () => {
   return data;
 };
 
-export const getMoviesByQuery = async (movieTitle) => {
+export const getMoviesByQuery = async (query = "") => {
   const data = axoisInstanceMovies.get(
-    `search/movie?query=${movieTitle}&include_adult=false&api_key=${API_KEY}`,
+    `search/movie?query=${query}&include_adult=false&language=en-US&page=1&api_key=${API_KEY}`,
     options
   );
   return data;

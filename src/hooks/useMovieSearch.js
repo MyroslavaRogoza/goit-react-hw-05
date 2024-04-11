@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { getTrendingMovies, getMoviesByQuery } from "../moviesApi";
 import { useSearchParams } from "react-router-dom";
+import { getTrendingMovies, getMoviesByQuery } from "../moviesApi";
 export const useMovieSearch = ({ isSearchPage = false }) => {
   const [movies, setMovies] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -31,7 +31,7 @@ export const useMovieSearch = ({ isSearchPage = false }) => {
   }, [isSearchPage]);
 
   useEffect(() => {
-    if (!query) return;
+    if (query === null) return;
     const fetchMovies = async () => {
       try {
         setError(false);
@@ -50,8 +50,9 @@ export const useMovieSearch = ({ isSearchPage = false }) => {
     };
     fetchMovies();
   }, [query]);
-  function findMovie(movieTitle) {
+  function onSetSearchQuery(movieTitle) {
+    //  const checkedMovieTitle= movieTitle !== "" ? { movieTitle } : {};
     setSearchParams({ query: movieTitle });
   }
-  return { movies, loader, error, findMovie };
+  return { movies, loader, error, onSetSearchQuery };
 };

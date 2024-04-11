@@ -1,15 +1,31 @@
-import React from "react";
+import { useMovieSearch } from "../../hooks/useMovieSearch";
+import Loader from "../../components/Loader/Loader";
+import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
+import MovieList from "../../components/MovieList/MovieList";
 
-const MoviesPage = ({ findMovie }) => {
+const MoviesPage = () => {
+  const { movies, loader, error, onSetSearchQuery } = useMovieSearch({
+    isSearchPage: true,
+  });
   function handleSubmit(evt) {
-    const movieTitle = evt.currentTarget.elements.userInput.value.trim();
-    findMovie(movieTitle);
+    evt.preventDefault();
+    const movieTitle = evt.currentTarget.elements.query.value.trim();
+    console.log(movieTitle);
+    onSetSearchQuery(movieTitle);
+    // evt.target.reset();
   }
+
   return (
-    <form onSubmit={handleSubmit}>
-      <input type="text" name="userInput" />
-      <button type="submit">Seach</button>
-    </form>
+    <>
+      <form onSubmit={handleSubmit}>
+        <input type="text" name="query" />
+
+        <button type="submit">Seach</button>
+      </form>
+      {loader && <Loader />}
+      {error && <ErrorMessage />}
+      {movies && <MovieList movies={movies} />}
+    </>
   );
 };
 

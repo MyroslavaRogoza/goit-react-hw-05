@@ -1,12 +1,12 @@
 import { NavLink } from "react-router-dom";
-const MovieList = ({ trendMovies }) => {
+const MovieList = ({ movies }) => {
   return (
     <ul>
-      {Array.isArray(trendMovies) &&
-        trendMovies.map(({ title, id }) => {
+      {Array.isArray(movies) &&
+        movies.map(({ title, id }) => {
           return (
             <li key={id}>
-              <NavLink>{title}</NavLink>
+              <NavLink to={`/movies/${id}`}>{title}</NavLink>
             </li>
           );
         })}
