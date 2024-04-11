@@ -19,7 +19,6 @@ const MoviesPage = () => {
     <>
       <form onSubmit={handleSubmit}>
         <input type="text" name="query" />
-
         <button type="submit">Seach</button>
       </form>
       {loader && <Loader />}

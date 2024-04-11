@@ -31,3 +31,10 @@ export const getMoviesByID = async (movieId) => {
   );
   return data;
 };
+export const getMoviesImage = async (posterPath) => {
+  const data = axios.get(
+    `https://image.tmdb.org/t/p/w500${posterPath}&api_key=${API_KEY}`,
+    options
+  );
+  return data;
+};

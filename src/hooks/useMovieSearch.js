@@ -4,16 +4,21 @@ import {
   getTrendingMovies,
   getMoviesByQuery,
   getMoviesByID,
+  getMoviesImage,
 } from "../moviesApi";
-export const useMovieSearch = ({ isSearchPage = false, isGetId = false }) => {
+export const useMovieSearch = ({ isSearchPage = false }) => {
   const [movies, setMovies] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [loader, setLoader] = useState(false);
   const [error, setError] = useState(false);
+  const [movieImage, setMovieImage] = useState(null);
   const query = searchParams.get("query");
   let movieId = null;
 
+  // if (movies.poster_path !== null) {
+  //   setMovieImage(movies.poster_path);
+  // }
   useEffect(() => {
     if (isSearchPage) return;
     const fetchMovies = async () => {
@@ -63,8 +68,8 @@ export const useMovieSearch = ({ isSearchPage = false, isGetId = false }) => {
         setError(false);
         setLoader(true);
         const { data } = await getMoviesByID(movieId);
+        console.log(data);
         setMovies(data);
-        console.log("byid", data);
       } catch (error) {
         console.log(error);
         setError(true);
@@ -73,7 +78,26 @@ export const useMovieSearch = ({ isSearchPage = false, isGetId = false }) => {
       }
     };
     fetchMovies();
-  }, [movieId]);
+  }, [movieId, movieImage]);
+
+  // useEffect(() => {
+  //   const fetchMovies = async () => {
+  //     if (posterPath === null) return;
+  //     try {
+  //       setError(false);
+  //       setLoader(true);
+  //       const data  = await getMoviesImage(posterPath);
+  //       setMovies(data);
+  //       console.log("by path", data);
+  //     } catch (error) {
+  //       console.log(error);
+  //       setError(true);
+  //     } finally {
+  //       setLoader(false);
+  //     }
+  //   };
+  //   fetchMovies();
+  // }, [posterPath]);
 
   function onSetSearchQuery(movieTitle) {
     //  const checkedMovieTitle= movieTitle !== "" ? { movieTitle } : {};
