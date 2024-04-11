@@ -24,3 +24,10 @@ export const getMoviesByQuery = async (query = "") => {
   );
   return data;
 };
+export const getMoviesByID = async (movieId) => {
+  const data = axoisInstanceMovies.get(
+    `movie/${movieId}?language=en-US&api_key=${API_KEY}`,
+    options
+  );
+  return data;
+};

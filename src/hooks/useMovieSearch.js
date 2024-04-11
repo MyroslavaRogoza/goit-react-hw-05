@@ -1,13 +1,18 @@
 import { useState, useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
-import { getTrendingMovies, getMoviesByQuery } from "../moviesApi";
-export const useMovieSearch = ({ isSearchPage = false }) => {
+import { useSearchParams, useParams } from "react-router-dom";
+import {
+  getTrendingMovies,
+  getMoviesByQuery,
+  getMoviesByID,
+} from "../moviesApi";
+export const useMovieSearch = ({ isSearchPage = false, isGetId = false }) => {
   const [movies, setMovies] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [loader, setLoader] = useState(false);
   const [error, setError] = useState(false);
   const query = searchParams.get("query");
+  let movieId = null;
 
   useEffect(() => {
     if (isSearchPage) return;
@@ -50,9 +55,34 @@ export const useMovieSearch = ({ isSearchPage = false }) => {
     };
     fetchMovies();
   }, [query]);
+
+  useEffect(() => {
+    const fetchMovies = async () => {
+      if (movieId === null) return;
+      try {
+        setError(false);
+        setLoader(true);
+        const { data } = await getMoviesByID(movieId);
+        setMovies(data);
+        console.log("byid", data);
+      } catch (error) {
+        console.log(error);
+        setError(true);
+      } finally {
+        setLoader(false);
+      }
+    };
+    fetchMovies();
+  }, [movieId]);
+
   function onSetSearchQuery(movieTitle) {
     //  const checkedMovieTitle= movieTitle !== "" ? { movieTitle } : {};
     setSearchParams({ query: movieTitle });
   }
-  return { movies, loader, error, onSetSearchQuery };
+  function getMovieId(id) {
+    console.log(id);
+    movieId = id;
+  }
+
+  return { movies, loader, error, onSetSearchQuery, getMovieId };
 };
