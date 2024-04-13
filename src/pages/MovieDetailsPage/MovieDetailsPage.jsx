@@ -49,7 +49,7 @@ const MovieDetailsPage = () => {
               })}
           </ul>
           <p></p>
-          <img src={`${baseImgUrl}${movies.poster_path}`} alt="" />
+          <img src={`${baseImgUrl}${movies.poster_path}`} alt={movies.name} />
         </div>
       )}
       {loader && <Loader />}

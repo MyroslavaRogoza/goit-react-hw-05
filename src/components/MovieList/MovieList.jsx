@@ -2,7 +2,7 @@ import { NavLink,useLocation } from "react-router-dom";
 const MovieList = ({ movies }) => {
   const location = useLocation();
   return (
-    <ul>
+    <ol>
       {Array.isArray(movies) &&
         movies.map(({ title, id }) => {
           return (
@@ -11,7 +11,7 @@ const MovieList = ({ movies }) => {
             </li>
           );
         })}
-    </ul>
+    </ol>
   );
 };
 

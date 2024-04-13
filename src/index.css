@@ -1,6 +1,48 @@
-:root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+#root {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0;
+}
+ body {
+  margin: 0;
+  background-color: rgb(8, 0, 53);
+  color: azure;
+} 
+
+*::after,
+*::before {
+  box-sizing: border-box;
+  font-family: "Montserrat", sans-serif;
+  font-size: 16px;
   line-height: 1.5;
-  font-weight: 400;
+  letter-spacing: 0.04em;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+}
+
+p:last-child {
+  margin-bottom: 0;
+}
+
+ul,
+li {
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  color: currentColor;
+  text-decoration: none;
+}
+
+button {
+  cursor: pointer;
+}

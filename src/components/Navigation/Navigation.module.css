@@ -1,0 +1,17 @@
+.nav {
+  display: flex;
+  gap: 15px;
+}
+.link {
+  display: flex;
+  color: azure;
+  padding: 15px 20px;
+  border: none;
+  background-color: rgb(126, 3, 126);
+  transition: all 0.5s;
+  opacity: 0.3;
+}
+.active {
+  background-color: blueviolet;
+  opacity: 1;
+}
