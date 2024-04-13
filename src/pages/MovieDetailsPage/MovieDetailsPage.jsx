@@ -1,22 +1,35 @@
-import { Link, Route, Routes, useParams } from "react-router-dom";
-import MovieCast from "../../components/MovieCast/MovieCast";
-import { useSearchParams } from "react-router-dom";
-import MovieReviews from "../../components/MovieReviews/MovieReviews";
+import { useState, useEffect, useRef, lazy, Suspense } from "react";
+import {
+  NavLink,
+  Link,
+  Route,
+  Routes,
+  useParams,
+  useLocation,
+} from "react-router-dom";
+const MovieCast = lazy(() => import("../../components/MovieCast/MovieCast"));
+const MovieReviews = lazy(() =>
+  import("../../components/MovieReviews/MovieReviews")
+);
+
 import { useMovieSearch } from "../../hooks/useMovieSearch";
 import Loader from "../../components/Loader/Loader";
 import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
 
 const MovieDetailsPage = () => {
+  const location = useLocation();
+  const backLinkRef = useRef(location.state ?? "/movies");
+  console.log(location);
   const { movieId } = useParams();
   const { movies, loader, error, getMovieId } = useMovieSearch({
     isSearchPage: false,
   });
   getMovieId(movieId);
   const baseImgUrl = "https://image.tmdb.org/t/p/w500";
+
   return (
     <>
-      {loader && <Loader />}
-      {error && <ErrorMessage />}
+      <NavLink to={backLinkRef.current}>Go back</NavLink>
       {movies instanceof Object && (
         <div>
           <h2>
@@ -39,7 +52,8 @@ const MovieDetailsPage = () => {
           <img src={`${baseImgUrl}${movies.poster_path}`} alt="" />
         </div>
       )}
-
+      {loader && <Loader />}
+      {error && <ErrorMessage />}
       <ul>
         <li>
           <Link to="cast">Cast</Link>
@@ -48,10 +62,12 @@ const MovieDetailsPage = () => {
           <Link to="reviews">Reviews</Link>
         </li>
       </ul>
-      <Routes>
-        <Route path="cast" element={<MovieCast />} />
-        <Route path="reviews" element={<MovieReviews />} />
-      </Routes>
+      <Suspense fallback={<Loader />}>
+        <Routes>
+          <Route path="cast" element={<MovieCast />} />
+          <Route path="reviews" element={<MovieReviews />} />
+        </Routes>
+        </Suspense>
     </>
   );
 };

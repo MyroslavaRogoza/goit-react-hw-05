@@ -12,7 +12,6 @@ const MoviesPage = () => {
     const movieTitle = evt.currentTarget.elements.query.value.trim();
     console.log(movieTitle);
     onSetSearchQuery(movieTitle);
-    // evt.target.reset();
   }
 
   return (

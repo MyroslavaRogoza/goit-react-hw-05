@@ -38,3 +38,11 @@ export const getMoviesImage = async (posterPath) => {
   );
   return data;
 };
+
+export const getAdditionalInfo = async (movieId, parameter) => {
+  const data = axoisInstanceMovies.get(
+    `movie/${movieId}/${parameter}?language=en-US&api_key=${API_KEY}`,
+    options
+  );
+  return data;
+};

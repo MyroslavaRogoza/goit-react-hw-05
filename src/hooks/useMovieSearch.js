@@ -4,7 +4,7 @@ import {
   getTrendingMovies,
   getMoviesByQuery,
   getMoviesByID,
-  getMoviesImage,
+  getAdditionalInfo,
 } from "../moviesApi";
 export const useMovieSearch = ({ isSearchPage = false }) => {
   const [movies, setMovies] = useState(null);
@@ -14,11 +14,10 @@ export const useMovieSearch = ({ isSearchPage = false }) => {
   const [error, setError] = useState(false);
   const [movieImage, setMovieImage] = useState(null);
   const query = searchParams.get("query");
+  const [additionalInfo, setAdditionalInfo] = useState(null);
   let movieId = null;
+  let addParameterName = null;
 
-  // if (movies.poster_path !== null) {
-  //   setMovieImage(movies.poster_path);
-  // }
   useEffect(() => {
     if (isSearchPage) return;
     const fetchMovies = async () => {
@@ -80,33 +79,42 @@ export const useMovieSearch = ({ isSearchPage = false }) => {
     fetchMovies();
   }, [movieId, movieImage]);
 
-  // useEffect(() => {
-  //   const fetchMovies = async () => {
-  //     if (posterPath === null) return;
-  //     try {
-  //       setError(false);
-  //       setLoader(true);
-  //       const data  = await getMoviesImage(posterPath);
-  //       setMovies(data);
-  //       console.log("by path", data);
-  //     } catch (error) {
-  //       console.log(error);
-  //       setError(true);
-  //     } finally {
-  //       setLoader(false);
-  //     }
-  //   };
-  //   fetchMovies();
-  // }, [posterPath]);
+  useEffect(() => {
+    const fetchMovies = async () => {
+      if (addParameterName === null) return;
+      try {
+        setError(false);
+        setLoader(true);
+        const { data } = await getAdditionalInfo(movieId, addParameterName);
+        setAdditionalInfo(data);
+        console.log("addInfo", data);
+      } catch (error) {
+        console.log(error);
+        setError(true);
+      } finally {
+        setLoader(false);
+      }
+    };
+    fetchMovies();
+  }, [movieId, addParameterName]);
 
   function onSetSearchQuery(movieTitle) {
-    //  const checkedMovieTitle= movieTitle !== "" ? { movieTitle } : {};
     setSearchParams({ query: movieTitle });
   }
   function getMovieId(id) {
-    console.log(id);
     movieId = id;
   }
+  function getMovieAdditionalInfo(parameterName) {
+    addParameterName = parameterName;
+  }
 
-  return { movies, loader, error, onSetSearchQuery, getMovieId };
+  return {
+    movies,
+    loader,
+    error,
+    onSetSearchQuery,
+    getMovieId,
+    getMovieAdditionalInfo,
+    additionalInfo,
+  };
 };
