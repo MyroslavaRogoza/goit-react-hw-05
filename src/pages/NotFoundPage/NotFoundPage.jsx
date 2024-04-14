@@ -1,7 +1,6 @@
+import css from './NotFound.module.css';
 const NotFoundPage = () => {
-  return (
-    <div><p>This page don&rsquo;t found</p></div>
-  )
-}
+  return <h1 className={css.notFoundInfo}>This page don&rsquo;t found</h1>;
+};
 
-export default NotFoundPage
+export default NotFoundPage;

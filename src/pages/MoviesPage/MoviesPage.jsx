@@ -1,3 +1,4 @@
+import css from "./MoviesPage.module.css";
 import { useMovieSearch } from "../../hooks/useMovieSearch";
 import Loader from "../../components/Loader/Loader";
 import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
@@ -14,9 +15,9 @@ const MoviesPage = () => {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
-        <input type="text" name="userInput"/>
-        <button type="submit">Seach</button>
+      <form onSubmit={handleSubmit} className={css.movieSearchForm}>
+        <input type="text" name="userInput" className={css.moviesInput}/>
+        <button type="submit" className={css.submitBtn}>Seach</button>
       </form>
       {loader && <Loader />}
       {error && <ErrorMessage />}

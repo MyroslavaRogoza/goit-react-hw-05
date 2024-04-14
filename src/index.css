@@ -3,11 +3,10 @@
   margin: 0 auto;
   padding: 0;
 }
- body {
+body {
   margin: 0;
   background-color: rgb(8, 0, 53);
-  color: azure;
-} 
+}
 
 *::after,
 *::before {
@@ -27,7 +26,19 @@ h6,
 p {
   margin: 0;
 }
-
+h1 {
+  color: rgb(165, 15, 185);
+}
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: rgb(236, 96, 255);
+}
+p,li {
+  color: azure;
+}
 p:last-child {
   margin-bottom: 0;
 }
@@ -45,4 +56,8 @@ a {
 
 button {
   cursor: pointer;
+}
+img{
+  display: block;
+  margin: 0 auto;
 }

@@ -1,0 +1,21 @@
+.movieCastContainer {
+  display: flex;
+  list-style: none;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  gap: 12px;
+  padding: 20px;
+}
+.movieCastItem {
+  flex-basis: calc((100% - 48px) / 4);
+  border: 1px solid azure;
+  background-color: rgba(87, 69, 193, 0.4)
+}
+.castMovieContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5px;
+  gap: 5px;
+}

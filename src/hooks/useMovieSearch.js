@@ -28,7 +28,6 @@ export const useMovieSearch = ({ isSearchPage = false }) => {
           data: { results },
         } = await getTrendingMovies();
         setMovies(results);
-        console.log(results);
       } catch (error) {
         console.log(error);
         setError(true);
@@ -49,7 +48,6 @@ export const useMovieSearch = ({ isSearchPage = false }) => {
           data: { results },
         } = await getMoviesByQuery(query);
         setMovies(results);
-        console.log(results);
       } catch (error) {
         console.log(error);
         setError(true);
@@ -67,7 +65,6 @@ export const useMovieSearch = ({ isSearchPage = false }) => {
         setError(false);
         setLoader(true);
         const { data } = await getMoviesByID(movieId);
-        console.log(data);
         setMovies(data);
       } catch (error) {
         console.log(error);
@@ -87,7 +84,6 @@ export const useMovieSearch = ({ isSearchPage = false }) => {
         setLoader(true);
         const { data } = await getAdditionalInfo(movieId, addParameterName);
         setAdditionalInfo(data);
-        console.log("addInfo", data);
       } catch (error) {
         console.log(error);
         setError(true);

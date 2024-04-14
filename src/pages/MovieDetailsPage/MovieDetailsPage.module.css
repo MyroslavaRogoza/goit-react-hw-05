@@ -1,0 +1,35 @@
+.goBackBtn {
+  display: inline-block;
+  color: azure;
+  padding: 10px 15px;
+  border: none;
+  background-color: blueviolet;
+  transition: all 0.5s;
+  border-radius: 3px;
+  margin: 20px 10px;
+}
+.goBackBtn:hover {
+  opacity: 0.9;
+  border: 2px groove azure;
+}
+.movieDetailContainer {
+  display: flex;
+  flex-direction: row-reverse;
+  gap: 10px;
+}
+.movieGenresContainer {
+  list-style: none;
+}
+.addInfoContainer {
+  display: flex;
+  gap: 20px;
+  list-style: none;
+}
+.addInfoActive {
+  color: rgb(165, 15, 185);
+}
+.infoDetails{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}

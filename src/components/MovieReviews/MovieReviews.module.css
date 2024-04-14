@@ -1,0 +1,16 @@
+.reviewsContainer {
+  display: flex;
+  width: 1128px;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0 auto;
+  margin-top: 10px;
+}
+.reviewsItem {
+  border: 2px solid azure;
+  list-style: none;
+  background-color: rgba(87, 69, 193, 0.4);
+}
+.reviewsAuthor {
+    color:  rgb(47, 0, 255);
+}

@@ -1,10 +1,10 @@
+import css from "./MovieCast.module.css";
 import { useParams } from "react-router-dom";
 import { useMovieSearch } from "../../hooks/useMovieSearch";
 import Loader from "../Loader/Loader";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
 const MovieCast = () => {
   let { movieId } = useParams();
-  const baseImgUrl = "https://image.tmdb.org/t/p/w200";
 
   const { getMovieAdditionalInfo, additionalInfo, loader, error, getMovieId } =
     useMovieSearch({
@@ -16,19 +16,21 @@ const MovieCast = () => {
 
   return (
     <>
-      <ul>
+      <ul className={css.movieCastContainer}>
         {additionalInfo &&
           Array.isArray(additionalInfo.cast) &&
           additionalInfo.cast.map(
             ({ id, original_name, profile_path, character }) => {
               return (
-                <li key={id}>
+                <li key={id} className={css.movieCastItem}>
                   <img
-                    src={`${baseImgUrl}${profile_path}`}
+                    src={`https://image.tmdb.org/t/p/w200${profile_path}`}
                     alt={original_name}
                   />
-                  <p> {original_name}</p>
-                  <p>Character: {character}</p>
+                  <div className={css.castMovieContainer}>
+                    <h3> {original_name}</h3>
+                    <p>Character: {character}</p>
+                  </div>
                 </li>
               );
             }

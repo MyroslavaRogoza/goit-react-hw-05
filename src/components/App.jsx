@@ -17,7 +17,7 @@ function App() {
       <header className={css.header}>
         <Navigation />
       </header>
-      <main>
+      <main className={css.main}>
         <Suspense fallback={<Loader />}>
           <Routes>
             <Route path="/" element={<HomePage />} />

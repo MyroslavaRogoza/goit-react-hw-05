@@ -1,3 +1,5 @@
+import css from "./MovieDetailsPage.module.css";
+import clsx from "clsx";
 import { useState, useEffect, useRef, lazy, Suspense } from "react";
 import {
   NavLink,
@@ -19,47 +21,67 @@ import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
 const MovieDetailsPage = () => {
   const location = useLocation();
   const backLinkRef = useRef(location.state ?? "/movies");
-  console.log(location);
   const { movieId } = useParams();
   const { movies, loader, error, getMovieId } = useMovieSearch({
     isSearchPage: false,
   });
   getMovieId(movieId);
-  const baseImgUrl = "https://image.tmdb.org/t/p/w500";
+  const detailsLinkClass = ({ isActive }) => {
+    return clsx(isActive && css.addInfoActive);
+  };
 
   return (
     <>
-      <NavLink to={backLinkRef.current}>Go back</NavLink>
+      <NavLink
+        to={backLinkRef.current}
+        className={({ isActive }) => {
+          return clsx(css.goBackBtn, isActive && css.active);
+        }}
+      >
+        Go back
+      </NavLink>
       {movies instanceof Object && (
-        <div>
-          <h2>
-            {movies.title} (
-            {typeof movies.release_date === "string" &&
-              movies.release_date.slice(0, 4)}
-            )
-          </h2>
-          <p>User Score {Math.floor(movies.vote_average * 10)}%</p>
-          <h3>Overview</h3>
-          <p>{movies.overview}</p>
-          <ul>
-            <h3>Genres</h3>
-            {Array.isArray(movies.genres) &&
-              movies.genres.map(({ id, name }) => {
-                return <li key={id}>{name}</li>;
-              })}
-          </ul>
-          <p></p>
-          <img src={`${baseImgUrl}${movies.poster_path}`} alt={movies.name} />
+        <div className={css.movieDetailContainer}>
+          <div className={css.infoDetails}>
+            <h1>
+              {movies.title} (
+              {typeof movies.release_date === "string" &&
+                movies.release_date.slice(0, 4)}
+              )
+            </h1>
+            <p>User Score {Math.floor(movies.vote_average * 10)}%</p>
+            <h3>Overview</h3>
+            <p>{movies.overview}</p>
+            <ul className={css.movieGenresContainer}>
+              <h3>Genres</h3>
+              <div className={css.genres}>
+                {Array.isArray(movies.genres) &&
+                  movies.genres.map(({ id, name }) => {
+                    return <li key={id}>{name}</li>;
+                  })}
+              </div>
+            </ul>
+          </div>
+          <div>
+            <img
+              src={`https://image.tmdb.org/t/p/w500${movies.poster_path}`}
+              alt={movies.name}
+            />
+          </div>
         </div>
       )}
       {loader && <Loader />}
       {error && <ErrorMessage />}
-      <ul>
+      <ul className={css.addInfoContainer}>
         <li>
-          <Link to="cast">Cast</Link>
+          <NavLink to="cast" className={detailsLinkClass}>
+            Cast
+          </NavLink>
         </li>
         <li>
-          <Link to="reviews">Reviews</Link>
+          <NavLink to="reviews" className={detailsLinkClass}>
+            Reviews
+          </NavLink>
         </li>
       </ul>
       <Suspense fallback={<Loader />}>
@@ -67,7 +89,7 @@ const MovieDetailsPage = () => {
           <Route path="cast" element={<MovieCast />} />
           <Route path="reviews" element={<MovieReviews />} />
         </Routes>
-        </Suspense>
+      </Suspense>
     </>
   );
 };
